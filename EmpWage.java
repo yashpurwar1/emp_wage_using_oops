@@ -1,43 +1,36 @@
 package empWage;
 
 public class EmpWage {
-	static int wagePerHour = 20;
-	static int partTimeHour = 4;
-	static int fullDayHour = 8;
-	static int maxDays = 20;
-	static int maxHours = 100;
-
-	public static void main(String[] args) {
-		int dayWage = 0;
-		int days, hour=0;
-		int totalWage=0;
-		for (days=1; days<=maxDays; days++) {
-			if (hour>=maxHours) {
+	public static final int IS_PART_TIME = 1;
+	public static final int IS_FULL_TIME = 2;
+	public static final int EMP_RATE_PER_HOUR = 20;
+	public static final int NUM_OF_WORKING_DAYS = 20;
+	public static final int MAX_HRS_IN_MONTH = 80;
+	
+	public static int computeWage() {
+		int empHrs=0, totalHrs=0, totalDays=0;
+		while(totalHrs<= MAX_HRS_IN_MONTH &&
+				totalDays<= NUM_OF_WORKING_DAYS) {
+			totalDays++;
+			int empCheck = (int) Math.floor(Math.random()*10)%3;
+			switch(empCheck) {
+			case IS_PART_TIME:
+				empHrs = 4;
 				break;
+			case IS_FULL_TIME:
+				empHrs = 8;
+				break;
+			default:
+				empHrs = 0;
 			}
-			int empCheck=(int) Math.floor(Math.random()*10)%3;
-			switch (empCheck) {
-			case 0:
-				System.out.println("Employee is absent");
-				dayWage=0;
-				hour=hour+0;
-				break;
-			case 1:
-				System.out.println("Employee is present");
-				dayWage=wagePerHour*fullDayHour;
-				System.out.println("DAily wage= "+dayWage);
-				hour=hour+8;
-				break;
-			case 2:
-				System.out.println("Employee parttime present");
-				dayWage=partTimeHour*wagePerHour;
-				System.out.println("Parttime wage = "+dayWage);
-				hour=hour+4;
-				break;
-			}
-			System.out.println(hour);
-			totalWage=totalWage+dayWage;
+			totalHrs += empHrs;
 		}
-		System.out.println("Wage for the month is "+ totalWage);
+		int totalWage = totalHrs * EMP_RATE_PER_HOUR;
+		System.out.println("Total Emp Wage: " +totalWage);
+		return totalWage;
+	}
+	
+	public static void main (String[] args ) {
+		computeWage();
 	}
 }
